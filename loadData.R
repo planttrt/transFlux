@@ -1,13 +1,22 @@
+#--------------------------------------------------------
+#
+# this file contains necessary codes to load all the data including
+#       sap flux, meteorology, eddy flux and remote sensing data
+#       (MODIS LST, LAI and VI)
+#       for both Blackwood and Parker sites
+#
+#--------------------------------------------------------
+
+
+
 source('auxFunction.R')
-source('../R.Repository/calcSolar.R')
-
-data <- list()
 
 
-# loading the Blackwood data
+#----------------------------
+# begin loading the Blackwood data
 #----------------------------
 
-# begin sap flux --  bw
+# begin sap flux --  blackwood
 bwSap <- read.csv('data/sap/sapFlux.BW.csv')
 bwSap$ydh <- bwSap$y*100000+bwSap$d*100+bwSap$h
 bwSap$yd <- bwSap$y*1000+bwSap$d
@@ -22,23 +31,19 @@ bwSapTot[bwSapTot==0] <- NA
 bwSapTot <- bwSapTot/3600*1000
 plot(bwSapTot, type='l')
 bwSap$sapTot <- bwSapTot
-#end sap flux -- bw
+#end sap flux -- blackwood
 
 
-
-# begin meteorological -- bw
+# begin meteorological -- blackwood
 bwRAWS <- read.csv(file = 'data/raws/NDUK.HOURLY.2000.2014.EDITED.csv')
 bwRAWS$DOY <- dateToDOY(bwRAWS$Year, bwRAWS$Month, bwRAWS$Day)
 bwRAWS$VPD <- 0.6108 * exp(17.27 * bwRAWS$Ta / (bwRAWS$Ta + 237.3))*(1-bwRAWS$RH/100)
-bwRAWS$ydh <- bwRAWS$y*100000 + bwRAWS$d*100 + bwRAWS$h
-bwRAWS$yd <- bwRAWS$y*1000 + bwRAWS$d
-# end meteorological -- bw
+bwRAWS$ydh <- bwRAWS$Year*100000 + bwRAWS$DOY*100 + bwRAWS$Hour
+bwRAWS$yd <- bwRAWS$Year*1000 + bwRAWS$DOY
+# end meteorological -- blackwood
 
 
-
-
-
-# begin modis reflectance bands, LST and VIs -- bw
+# begin modis reflectance bands, LST and VIs -- blackwood
 bwMODIS.SR <- read.table( file = 'data/modis/modisB.BW.csv',  sep = ',', header = T)
 bwMODIS.SR$yd <- bwMODIS.SR$y*1000 + bwMODIS.SR$d
   
@@ -52,14 +57,68 @@ bwMODIS.LST$VTd[is.na(bwMODIS.LST$STd)] <- NA
 bwMODIS.LST$VTn[is.na(bwMODIS.LST$STn)] <- NA
 bwMODIS.LST$VTd <- bwMODIS.LST$VTd*.1
 bwMODIS.LST$VTn <- bwMODIS.LST$VTn*.1
-# begin modis reflectance bands, LST and VIs -- bw
+# begin modis reflectance bands, LST and VIs -- blackwood
+
+#----------------------------
+# end loading the Blackwood data
+#----------------------------
 
 
 
-sapfluxParker <- read.csv('data/sapFlux.Parker.csv')
+#----------------------------
+# begin loading the Parker data
+#----------------------------
 
-ameriParker <- readAmeriFlux('data/other data/North_Carolina_Loblolly_Pine/with_gaps/')
+# begin sap flux --  parker
+pkSap <- read.csv('data/sap/sapFlux.Parker.csv')
+pkSap$ydh <- pkSap$y*100000+pkSap$d*100+pkSap$h
+pkSap$yd <- pkSap$y*1000+pkSap$d
+pkSap[pkSap==0] <- NA
+plot(pkSap$sap.mm.day, type='l')
+#end sap flux -- parker
 
-# -------------Load MODIS 
 
-######
+
+
+# begin meteorological/ameriflux -- parker
+# pkAmeriFluxList <- readAmeriFlux('data/ameriflux/North_Carolina_Loblolly_Pine/with_gaps')
+# write.table(pkAmeriFluxList$units, file = 'data/ameriflux/pkAmeriFluxList_units.csv', sep = ',')
+# write.table(pkAmeriFluxList$data, file = 'data/ameriflux/pkAmeriFluxList_data.csv', sep = ',')
+# write.table(pkAmeriFluxList$coverage, file = 'data/ameriflux/pkAmeriFluxList_coverage.csv', sep = ',')
+
+pkAmeriFluxList <- list()
+pkAmeriFluxList$units <- read.table(file = 'data/ameriflux/pkAmeriFluxList_units.csv', sep = ',')
+pkAmeriFluxList$coverage <- read.table(file = 'data/ameriflux/pkAmeriFluxList_coverage.csv', sep = ',')
+pkAmeriFluxList$data <- read.table(file = 'data/ameriflux/pkAmeriFluxList_data.csv', sep = ',')
+
+pkAmeriFlux <- pkAmeriFluxList$data
+pkAmeriFlux$VPD2 <- 0.6108 * exp(17.27 * pkAmeriFlux$TA / (pkAmeriFlux$TA + 237.3))*(1-pkAmeriFlux$RH/100)
+pkAmeriFlux$HR <- floor(pkAmeriFlux$HRMIN/100)+1
+pkAmeriFlux$ydh <- pkAmeriFlux$YEAR*100000 + pkAmeriFlux$DOY*100 + pkAmeriFlux$HR
+pkAmeriFlux$yd <- pkAmeriFlux$YEAR*1000 + pkAmeriFlux$DOY
+# begin meteorological/ameriflux -- parker
+
+
+
+
+# begin modis reflectance bands, LST and VIs -- parker
+pkMODIS.SR <- read.table( file = 'data/modis/modisB.NC2.csv',  sep = ',', header = T)
+pkMODIS.SR$yd <- pkMODIS.SR$y*1000 + pkMODIS.SR$d
+
+pkMODIS.LAI <- read.table( file = 'data/modis/modisLAI.NC2.csv',  sep = ',', header = T)
+pkMODIS.LAI$yd <- pkMODIS.LAI$y*1000 + pkMODIS.LAI$d
+
+pkMODIS.LST <- read.table( file = 'data/modis/modisT.NC2.csv',  sep = ',', header = T)
+pkMODIS.LST$yd <- pkMODIS.LST$y*1000 + pkMODIS.LST$d
+
+pkMODIS.LST$VTd[is.na(pkMODIS.LST$STd)] <- NA
+pkMODIS.LST$VTn[is.na(pkMODIS.LST$STn)] <- NA
+pkMODIS.LST$VTd <- pkMODIS.LST$VTd*.1
+pkMODIS.LST$VTn <- pkMODIS.LST$VTn*.1
+# begin modis reflectance bands, LST and VIs -- parker
+
+#----------------------------
+# end loading the Parker data
+#----------------------------
+
+
