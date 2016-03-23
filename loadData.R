@@ -10,7 +10,7 @@
 
 
 source('auxFunction.R')
-
+source('../R.Repository/calcSolar.R')
 
 #----------------------------
 # begin loading the Blackwood data
@@ -121,5 +121,27 @@ pkMODIS.LST$VTn <- pkMODIS.LST$VTn*.1
 # end loading the Parker data
 #----------------------------
 
+
+
+
+#----------------------------
+# begin geolocation data for bw and pk
+#----------------------------
+bw <- list(Latitude = 35.9736, Longitude = -79.1004, Altitude = 168)
+pk <- list(Latitude = 35.8031, Longitude = -76.6679, Altitude = 12)
+#----------------------------
+# end geolocation data for bw and pk
+#----------------------------
+
+
+
+#----------------------------
+# begin solar calculations for bw and pk
+#----------------------------
+bwSolar <- calcSolar(DOY = data.bw$d + data.bw$dvt/24 , Lat = 35.9736, Elevation = 168, Lon = -79.1004, SLon =  -79.1004) 
+pkSolar <- calcSolar(DOY = data.nc$d + data.nc$dvt/24, Lat = 35.8031, Elevation = 12, Lon=-76.6679, SLon = -76.6679) 
+#----------------------------
+# end solar calculations for bw and pk
+#----------------------------
 
  
