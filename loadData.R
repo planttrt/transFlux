@@ -88,9 +88,9 @@ pkSap[pkSap==0] <- NA
  # write.table(pkAmeriFluxList$coverage, file = 'data/ameriflux/pkAmeriFluxList_coverage.csv', sep = ',')
 
 pkAmeriFluxList <- list()
-pkAmeriFluxList$units <- read.table(file = 'data/ameriflux/pkAmeriFluxList_units.csv', sep = ',')
-pkAmeriFluxList$coverage <- read.table(file = 'data/ameriflux/pkAmeriFluxList_coverage.csv', sep = ',')
-pkAmeriFluxList$data <- read.table(file = 'data/ameriflux/pkAmeriFluxList_data.csv', sep = ',')
+pkAmeriFluxList$units <- read.table(file = 'data/pkAmeri//pkAmeriFluxList_units.csv', sep = ',')
+pkAmeriFluxList$coverage <- read.table(file = 'data/pkAmeri//pkAmeriFluxList_coverage.csv', sep = ',')
+pkAmeriFluxList$data <- read.table(file = 'data/pkAmeri/pkAmeriFluxList_data.csv', sep = ',')
 
 pkAmeriFlux <- pkAmeriFluxList$data
 pkAmeriFlux$VPD2 <- 0.6108 * exp(17.27 * pkAmeriFlux$TA / (pkAmeriFlux$TA + 237.3))*(1-pkAmeriFlux$RH/100)

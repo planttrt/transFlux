@@ -35,7 +35,7 @@ tmp2 <- cbind(pkField[,nmCol],'PK')
 colnames(tmp1) <- colnames(tmp2) <- c(nmCol, 'Site')
 tmp <- as.data.table(rbind(tmp1,tmp2))
 
-g <- ggplot(tmp, aes(Site, WD)) 
+g <- ggplot(tmp, aes(Site, TR)) 
 g + geom_violin(scale='area')
 
 g <- ggplot(tmp , aes(WS)) 

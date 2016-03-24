@@ -1,0 +1,13 @@
+FID,site,ID,tag,species,x,y,UTMx,UTMy,TWI,Location,Tree,DBH,SpeciesName,Common Name,Sapwood,label
+1,BW,1799,752,pinuTaed,-92.7,-12.5,671857.7333,3983920.739,6.085807,Lower,dom,64.6,Pinus taeda,loblolly pine,0.10308587,pita152
+2,BW,1812,165,pinuTaed,-102.1,-7.6,671847.7379,3983924.269,5.675469,Lower,sup,47.6,Pinus taeda,loblolly pine,0.06419131,pita165
+3,BW,921,656,liriTuli,-120.4,-19,671831.222,3983910.41,6.392027,Lower,sup,24.9,Liriodendron tulipifera,yellow poplar,0.02349467,litu656
+4,BW,923,658,liriTuli,-118,-17.5,671833.3873,3983912.233,6.392027,Lower,dom,51,Liriodendron tulipifera,yellow poplar,0.07144205,litu658
+5,BW,1683,736,acerRubr,-98.2,-19.4,671853.2578,3983913.135,6.085807,Lower,sup,24.9,Acer rubrum,red maple,0.02349467,acru736
+6,BW,1721,774,acerRubr,-101.8,-21.2,671849.9466,3983910.846,6.92653,Lower,dom,14.8,Acer rubrum,red maple,0.01048347,acru774
+7,BW,5798,747,querAlba,-19.3,-162.1,671951.4326,3983782.941,4.956152,Upper,dom,40.5,Quercus alba,white oak,0.04996429,qual747
+8,BW,5816,765,querAlba,-28.5,-156,671941.4665,3983787.688,5.373671,Upper,sup,20.2,Quercus alba,white oak,0.01698439,qual765
+9,BW,5692,904,acerRubr,-12.2,-171.5,671959.7833,3983774.633,4.854308,Upper,dom,28.2,Acer rubrum,red maple,0.02849764,acru904
+10,BW,5705,915,acerRubr,-12,-181.8,671961.4291,3983764.463,4.52989,Upper,sup,22.65,Acer rubrum,red maple,0.0202847,acru915
+11,BW,12390,3969,pinuTaed,-41.5,-181,671932.1096,3983761.109,5.51162,Upper,dom,52.6,Pinus taeda,loblolly pine,0.0749486,pita3969
+12,BW,12469,1649,pinuTaed,-51,-174.5,671921.7902,3983766.209,4.712172,Upper,sup,45.5,Pinus taeda,loblolly pine,0.05985225,pita2493
