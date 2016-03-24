@@ -9,8 +9,8 @@
 
 
 
-source('auxFunction.R')
-source('../R.Repository/calcSolar.R')
+source('myLib/auxFunction.R')
+source('myLib/calcSolar.R')
 
 #----------------------------
 # begin loading the Blackwood data
@@ -146,6 +146,9 @@ bwRAWS$WS <- bwRAWS$WS..m.s.
 bwRAWS$TA <- bwRAWS$Ta
 bwSap$TR <- bwSap$sapTot
 pkSap$TR <- pkSap$sap.mm.day
+
+bwMODIS.LST$LST <- bwMODIS.LST$STd
+pkMODIS.LST$LST <- pkMODIS.LST$STd
 
 pkAmeriFlux$ET <- pkAmeriFlux$LE/(2.502*10^3-2.308*pkAmeriFlux$TA)/1000*3600*24
 #----------------------------

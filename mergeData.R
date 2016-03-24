@@ -33,15 +33,31 @@ nmCol <- c('ydh', 'TA', 'Rg', 'VPD', 'WS', 'RH','WD','TR')
 tmp1 <- cbind(bwField[,nmCol],'BW')
 tmp2 <- cbind(pkField[,nmCol],'PK')
 colnames(tmp1) <- colnames(tmp2) <- c(nmCol, 'Site')
-tmp <- as.data.table(rbind(tmp1,tmp2))
+bothField <- as.data.table(rbind(tmp1,tmp2))
 
-g <- ggplot(tmp, aes(Site, TR)) 
+g <- ggplot(bothField, aes(Site, TR)) 
 g + geom_violin(scale='area')
 
-g <- ggplot(tmp , aes(WS)) 
+g <- ggplot(bothField , aes(WS)) 
 g + geom_density(binwidth=2, aes(color=Site))
 
 g <- ggplot(pkField, aes(TR, ET))
 g + geom_point() + geom_smooth() +geom_abline(color='red')
 
 
+
+colnames(pkFieldMODIS)
+colnames(bwFieldMODIS)
+nmCol <- c('ydh', 'TA', 'Rg', 'VPD', 'WS', 'RH','WD','TR','b1','b2','b3','NDVI','EVI', 'STd','QCd','STn','QCn', 'LST')
+
+tmp1 <- cbind(bwFieldMODIS[,nmCol],'BW')
+tmp2 <- cbind(pkFieldMODIS[,nmCol],'PK')
+colnames(tmp1) <- colnames(tmp2) <- c(nmCol, 'Site')
+bothFieldMODIS <- as.data.table(rbind(tmp1,tmp2))
+
+
+g <- ggplot(bothFieldMODIS, aes(LST-TA, TR, size=Rg, color=Rg))
+g + geom_point() + geom_smooth() +facet_grid(~Site)
+
+
+plot(bwFieldMODIS$STd-bwFieldMODIS$Ta, bwFieldMODIS$TR)
