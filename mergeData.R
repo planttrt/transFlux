@@ -1,3 +1,4 @@
+library(ggplot2)
 library(data.table)
 
 
@@ -18,12 +19,29 @@ pkField <- merge(pkAmeriFlux, pkSap, by = 'ydh', all=T)
 pkFieldMODIS <- merge(pkMODIS, pkField, by='ydh')
 
 
-plot(pkFieldMODIS$STd-pkFieldMODIS$TA, pkFieldMODIS$sap.mm.day)
-plot(bwFieldMODIS$STd-bwFieldMODIS$Ta, bwFieldMODIS$sapTot)
+# plot(pkFieldMODIS$STd-pkFieldMODIS$TA, pkFieldMODIS$sap.mm.day)
+# plot(bwFieldMODIS$STd-bwFieldMODIS$Ta, bwFieldMODIS$sapTot)
 
-library(ggplot2)
 
-qplot(STd-Ta, sapTot, data = bwFieldMODIS, geom = c('smooth','point'))
+# qplot(STd-Ta, sapTot, data = bwFieldMODIS, geom = c('smooth','point'))
 
+colnames(bwField)
+colnames(pkField)
+
+nmCol <- c('ydh', 'TA', 'Rg', 'VPD', 'WS', 'RH','WD','TR')
+
+tmp1 <- cbind(bwField[,nmCol],'BW')
+tmp2 <- cbind(pkField[,nmCol],'PK')
+colnames(tmp1) <- colnames(tmp2) <- c(nmCol, 'Site')
+tmp <- as.data.table(rbind(tmp1,tmp2))
+
+g <- ggplot(tmp, aes(Site, WD)) 
+g + geom_violin(scale='area')
+
+g <- ggplot(tmp , aes(WS)) 
+g + geom_density(binwidth=2, aes(color=Site))
+
+g <- ggplot(pkField, aes(TR, ET))
+g + geom_point() + geom_smooth() +geom_abline(color='red')
 
 

@@ -22,7 +22,7 @@ readAmeriFlux <- function(folder){
   amer$data[amer$data == -6999] <- NA
   amer$data[amer$data == -9999] <- NA
 
-  amer$data$ET <- amer$data$LE/1000/(2.502*10^3-2.308*amer$data$TA)
+  # amer$data$ET <- amer$data$LE/((2.502*10^3-2.308*amer$data$TA)/1000)
   #amer$data <- cbind(amer$data, ET)
   
   amer

@@ -29,7 +29,7 @@ for(i in 1:ncol(bwSapTot))  bwSapTot[,i] <- bwSapTot[,i]*bwProbs$Sapwood[which(c
 bwSapTot <- rowSums(bwSapTot[,], na.rm= T)/sum(bwProbs$Sapwood)
 bwSapTot[bwSapTot==0] <- NA
 bwSapTot <- bwSapTot/3600*1000
-plot(bwSapTot, type='l')
+# plot(bwSapTot, type='l')
 bwSap$sapTot <- bwSapTot
 #end sap flux -- blackwood
 
@@ -40,6 +40,7 @@ bwRAWS$DOY <- dateToDOY(bwRAWS$Year, bwRAWS$Month, bwRAWS$Day)
 bwRAWS$VPD <- 0.6108 * exp(17.27 * bwRAWS$Ta / (bwRAWS$Ta + 237.3))*(1-bwRAWS$RH/100)
 bwRAWS$ydh <- bwRAWS$Year*100000 + bwRAWS$DOY*100 + bwRAWS$Hour
 bwRAWS$yd <- bwRAWS$Year*1000 + bwRAWS$DOY
+
 # end meteorological -- blackwood
 
 
@@ -74,17 +75,17 @@ pkSap <- read.csv('data/sap/sapFlux.Parker.csv')
 pkSap$ydh <- pkSap$y*100000+pkSap$d*100+pkSap$h
 pkSap$yd <- pkSap$y*1000+pkSap$d
 pkSap[pkSap==0] <- NA
-plot(pkSap$sap.mm.day, type='l')
+# plot(pkSap$sap.mm.day, type='l')
 #end sap flux -- parker
 
 
 
 
 # begin meteorological/ameriflux -- parker
-# pkAmeriFluxList <- readAmeriFlux('data/ameriflux/North_Carolina_Loblolly_Pine/with_gaps')
-# write.table(pkAmeriFluxList$units, file = 'data/ameriflux/pkAmeriFluxList_units.csv', sep = ',')
-# write.table(pkAmeriFluxList$data, file = 'data/ameriflux/pkAmeriFluxList_data.csv', sep = ',')
-# write.table(pkAmeriFluxList$coverage, file = 'data/ameriflux/pkAmeriFluxList_coverage.csv', sep = ',')
+ # pkAmeriFluxList <- readAmeriFlux('data/ameriflux/North_Carolina_Loblolly_Pine/with_gaps')
+ # write.table(pkAmeriFluxList$units, file = 'data/ameriflux/pkAmeriFluxList_units.csv', sep = ',')
+ # write.table(pkAmeriFluxList$data, file = 'data/ameriflux/pkAmeriFluxList_data.csv', sep = ',')
+ # write.table(pkAmeriFluxList$coverage, file = 'data/ameriflux/pkAmeriFluxList_coverage.csv', sep = ',')
 
 pkAmeriFluxList <- list()
 pkAmeriFluxList$units <- read.table(file = 'data/ameriflux/pkAmeriFluxList_units.csv', sep = ',')
@@ -136,12 +137,31 @@ pk <- list(Latitude = 35.8031, Longitude = -76.6679, Altitude = 12)
 
 
 #----------------------------
+# begin corrections for bw and pk
+#----------------------------
+# pkAmeriFlux$Rg[pkAmeriFlux$Rg<0] <- 0
+# bwRAWS$Rg[bwRAWS$Rg<0] <- 0
+bwRAWS$Rg <- bwRAWS$Solar.Radiation..KW.hr.m_.*1000
+bwRAWS$WS <- bwRAWS$WS..m.s.
+bwRAWS$TA <- bwRAWS$Ta
+bwSap$TR <- bwSap$sapTot
+pkSap$TR <- pkSap$sap.mm.day
+
+pkAmeriFlux$ET <- pkAmeriFlux$LE/(2.502*10^3-2.308*pkAmeriFlux$TA)/1000*3600*24
+#----------------------------
+# end corrections for bw and pk
+#----------------------------
+
+
+
+#----------------------------
 # begin solar calculations for bw and pk
 #----------------------------
-bwSolar <- calcSolar(DOY = data.bw$d + data.bw$dvt/24 , Lat = 35.9736, Elevation = 168, Lon = -79.1004, SLon =  -79.1004) 
-pkSolar <- calcSolar(DOY = data.nc$d + data.nc$dvt/24, Lat = 35.8031, Elevation = 12, Lon=-76.6679, SLon = -76.6679) 
+# bwSolar <- calcSolar(DOY = data.bw$d + data.bw$dvt/24 , Lat = 35.9736, Elevation = 168, Lon = -79.1004, SLon =  -79.1004) 
+# pkSolar <- calcSolar(DOY = data.nc$d + data.nc$dvt/24, Lat = 35.8031, Elevation = 12, Lon=-76.6679, SLon = -76.6679) 
 #----------------------------
 # end solar calculations for bw and pk
 #----------------------------
 
  
+
