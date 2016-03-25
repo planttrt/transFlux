@@ -13,6 +13,7 @@ hw <- as.data.table(hwFill$data)
 
 p.nc <- nc[YEAR%in%c(2005:2008), .(p=sum(PREC, na.rm = T)), YEAR]
 p.hw <- hw[YEAR%in%c(2005:2008), .(p=sum(PREC, na.rm = T)), YEAR]
+p.nc$p/p.hw$p
 
 m.nc <- nc[YEAR%in%c(2005:2008), .(m=mean(LE, na.rm = T)), YEAR]
 m.hw <- hw[YEAR%in%c(2005:2008), .(m=mean(LE, na.rm = T)), YEAR]
