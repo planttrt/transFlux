@@ -5,9 +5,9 @@ library(gjam)
 
 
 
-modelList <- list(ng = 2000, burnin = 1000, typeNames = c('CA','CON','CON'))
+modelList <- list(ng = 2000, burnin = 1000, typeNames = c('CA',rep('CON',2)))
 
-xydata <- transData[Site=="PK",.(intercept=1, dT=(TA-LST)*WS, Solar=Rg, Thermal=(TA+273)^4, BW = Site=='BW', Site, 
+xydata <- transData[Site=='PK',.(dT=(LST-TA), Solar=Rg, Thermal=(LST+273)^4, Site, WS, 
                         TR, dEVI, dNDVI, EVI, NDVI)]
 xydata <- na.omit(as.data.frame(xydata))
 ydata <- xydata[,c('TR','dEVI', 'dNDVI')]
@@ -17,7 +17,9 @@ str(ydata)
 
 colnames(xydata)
 
-out <- gjamGibbs( ~ dT + Solar + Thermal,
+out <- gjamGibbs( ~ dT*WS + Solar + Thermal,
+  #~ dT + Solar + Thermal + Site + EVI + WS + 
+   #                 dT:Site + dT:Thermal + dT:Solar + dT:EVI + dT:WS,
            xdata = xydata, 
            ydata = ydata,
            modelList = modelList)
