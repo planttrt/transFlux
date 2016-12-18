@@ -179,7 +179,7 @@ transLoadMergeData <- function(){
   
   #merge Blackwood
   bwMODIS <- merge(bwMODIS.SR, bwMODIS.LST, by = 'yd', all=T)
-  bwMODIS$ydh <- bwMODIS$yd*100 + floor(bwMODIS$VTd)+1
+  bwMODIS$ydh <- bwMODIS$yd*100 + floor(bwMODIS$VTd)
   
   bwField <- merge(bwRAWS, bwSap, by = 'ydh', all=T)
   
@@ -188,7 +188,7 @@ transLoadMergeData <- function(){
   
   #merge Parker
   pkMODIS <- merge(pkMODIS.SR, pkMODIS.LST, by = 'yd', all=T)
-  pkMODIS$ydh <- pkMODIS$yd*100 + floor(pkMODIS$VTd)+1
+  pkMODIS$ydh <- pkMODIS$yd*100 + floor(pkMODIS$VTd)
   
   pkField <- merge(pkAmeriFlux, pkSap, by = 'ydh', all=T)
   pkFieldMODIS <- merge(pkMODIS, pkField, by='ydh')
