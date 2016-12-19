@@ -19,6 +19,9 @@ transData$Sdiropen <- sol$Sdiropen
 transData$Sdifopen <- sol$Sdifopen
 transData[,RgOpen:=Sdifopen+Sdiropen]
 
-
-
+transData$ET <- NA
+transData$ET <- as.numeric(transData$ET)
+# str(transData$ET)
+transData[Site=='PK',]$ET <- transData.Orig$pk$ET
+transData[ET<=0,ET:=NA]
 

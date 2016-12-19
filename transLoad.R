@@ -99,6 +99,7 @@ transLoadMergeData <- function(){
   pkAmeriFlux$HR <- floor(pkAmeriFlux$HRMIN/100)+1
   pkAmeriFlux$ydh <- pkAmeriFlux$YEAR*100000 + pkAmeriFlux$DOY*100 + pkAmeriFlux$HR
   pkAmeriFlux$yd <- pkAmeriFlux$YEAR*1000 + pkAmeriFlux$DOY
+  pkAmeriFlux$PR <- pkAmeriFlux$PREC*2*24
   # begin meteorological/ameriflux -- parker
   
   
@@ -146,6 +147,7 @@ transLoadMergeData <- function(){
   bwRAWS$Rg <- bwRAWS$Solar.Radiation..KW.hr.m_.*1000
   bwRAWS$WS <- bwRAWS$WS..m.s.
   bwRAWS$TA <- bwRAWS$Ta
+  bwRAWS$PR <- bwRAWS$Precip...mm.*24
   bwSap$TR <- bwSap$sapTot
   pkSap$TR <- pkSap$sap.mm.day
   
@@ -214,7 +216,7 @@ transLoadMergeData <- function(){
   
   colnames(pkFieldMODIS)
   colnames(bwFieldMODIS)
-  nmCol <- c('ydh', 'TA', 'Rg', 'VPD', 'WS', 'RH','WD','TR','b1','b2','b3','NDVI','EVI', 'STd','QCd','STn','QCn', 'LST')
+  nmCol <- c('ydh', 'TA', 'Rg', 'VPD', 'WS', 'RH','WD','TR','PR','b1','b2','b3','NDVI','EVI', 'STd','QCd','STn','QCn', 'LST')
   
   tmp1 <- cbind(bwFieldMODIS[,nmCol],'BW')
   tmp2 <- cbind(pkFieldMODIS[,nmCol],'PK')
