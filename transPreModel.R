@@ -1,6 +1,7 @@
 library(data.table)
+library(lubridate)
 
-source('~/Projects/transFlux/transLoad.R')
+source('~/Projects/transFlux/transLoadData.R')
 source('~/Projects/transFlux/transAuxFuncs.R')
 
 transData.Orig <- transLoadMergeData()
@@ -25,3 +26,4 @@ transData$ET <- as.numeric(transData$ET)
 transData[Site=='PK',]$ET <- transData.Orig$pk$ET
 transData[ET<=0,ET:=NA]
 
+transData[,YearCon:=Year+DOY/(365+(Year%%4==0))]
