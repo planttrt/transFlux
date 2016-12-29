@@ -231,6 +231,11 @@ transLoadMergeData <- function(){
   bothFieldMODIS[,DOY:=floor(ydh%%100000/100)]
   bothFieldMODIS[,Hour:=ydh%%100]
   
-  list(merged = bothFieldMODIS, pk= as.data.table(pkFieldMODIS), bw=as.data.table(bwFieldMODIS))
+  list(merged = bothFieldMODIS, 
+       pk= as.data.table(pkFieldMODIS), 
+       bw=as.data.table(bwFieldMODIS),
+       bothField=bothField,
+       bwField=as.data.table(bwField),
+       pkField= as.data.table(pkField))
 }
 
