@@ -3,7 +3,7 @@ library(gjam)
 source('~/Projects/procVisData/dataViz.R')
 
 
-# source('~/Projects/transFlux/transPreModel.R')
+if(!exists('transDataLoaded'))source('~/Projects/transFlux/transPreModel.R')
 
 xydata <- transData[,
                     .(Site, 

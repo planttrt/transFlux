@@ -27,3 +27,6 @@ transData[Site=='PK',]$ET <- transData.Orig$pk$ET
 transData[ET<=0,ET:=NA]
 
 transData[,YearCon:=Year+DOY/(365+(Year%%4==0))]
+
+
+transDataLoaded <- T
