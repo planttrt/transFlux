@@ -92,7 +92,7 @@ readAmeriFlux <- function(folder){
   
   amer$data[amer$data == -6999] <- NA
   amer$data[amer$data == -9999] <- NA
-
+  
   # amer$data$ET <- amer$data$LE/((2.502*10^3-2.308*amer$data$TA)/1000)
   #amer$data <- cbind(amer$data, ET)
   
@@ -109,3 +109,96 @@ dateToDOY <- function(y, m, d){
   }
   doy
 }
+
+
+
+library(rjags)
+
+lmJAGS <- function(x, y,
+                    n.chains=4,
+                    n.adapt=100,
+                    n.burnin=1000,
+                    n.gibbs=1000){
+  model <- textConnection(
+    "model {
+    for (i in 1:N){
+    y[i] ~ dnorm(x[i,]%*%beta, tau)
+    }
+    for (i in 1:p) 
+    {
+    beta[i] ~ dnorm(0, .0001)
+    }
+    tau <- pow(sigma, -2)
+    sigma ~ dunif(0,100)
+    
+    for (i in 1:N){
+    ypred.tmp[i] ~ dnorm(x[i,]%*%beta, tau)
+    ypred[i] <- max(0, ypred.tmp[i])
+    }
+}
+")
+  
+  
+  jags <- jags.model(model,
+                     data = list('x' = x,
+                                 'y' = y,
+                                 'N' = nrow(x),
+                                 'p'= ncol(x)),
+                     n.chains=n.chains,
+                     n.adapt=n.adapt)
+  
+  update(jags, n.burnin)
+  
+  out <- jags.samples(jags,
+                      c('beta',
+                        'sigma',
+                        'ypred'),
+                      n.gibbs)
+  
+  out
+  }
+
+
+lmtJAGS <- function(x, y,
+                    n.chains=4,
+                    n.adapt=100,
+                    n.burnin=1000,
+                    n.gibbs=1000){
+  model <- textConnection(
+    "model {
+  for (i in 1:N){
+  y[i] ~ dnorm(x[i,]%*%beta, tau)T(0,)
+  }
+  for (i in 1:p) 
+  {
+  beta[i] ~ dnorm(0, .0001)
+  }
+  tau <- pow(sigma, -2)
+  sigma ~ dunif(0,100)
+
+  for (i in 1:N){
+    ypred[i] ~ dnorm(x[i,]%*%beta, tau)T(0,)
+  }
+  }
+  ")
+  
+  
+  jags <- jags.model(model,
+                     data = list('x' = x,
+                                 'y' = y,
+                                 'N' = nrow(x),
+                                 'p'= ncol(x)),
+                     n.chains=n.chains,
+                     n.adapt=n.adapt)
+  
+  update(jags, n.burnin)
+  
+  out <- jags.samples(jags,
+                      c('beta',
+                        'sigma',
+                        'ypred'),
+                      n.gibbs)
+  
+  out
+}
+
