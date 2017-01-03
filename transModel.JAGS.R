@@ -8,6 +8,8 @@ xydata <- transData[,
                       ydh,
                       BW=(Site=='BW')*1,
                       dT=1*(LST-TA), 
+                      TA,
+                      LST,
                       Solar=Rg, 
                       Thermal= 0.96*(LST+273)^4 + 0.75*(TA+273)^4,
                       LST4 = (LST+273)^4,
@@ -25,6 +27,7 @@ modelET4Site <- function(site='PK'){
                            dT, 
                            Solar, 
                            LST4, 
+                           TA.dT = dT*TA,
                            Solar.dT = dT*Solar,
                            windy.dT=-dT*windy, 
                            # cloud.dT=dT*cloud, 
@@ -48,8 +51,9 @@ bwSite <- modelET4Site('BW')
 pkSite <- modelET4Site('PK')
 
 bothSites <- list(bw=bwSite, pk=pkSite)
- 
-save(list = c('bothSites','xydata','transData'), file = 'bothSites.Rdata')
+plotGibbsBoxplots(pkSite$betaStd, textAdj = 0, sigPlot = F, sort = F)
+
+save(list = c('bothSites','xydata','transData', 'transData.Orig'), file = 'bothSites.Rdata')
 
 # plotObsPred(y, rowMeans(yp), xlim = c(0,10), ylim=c(0,10))
 # abline(0,1, col='#55ccaa', lwd=2, lty=2)
