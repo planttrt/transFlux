@@ -14,30 +14,32 @@ colList <- colList.brownGreen
 colnames(transData)
 
 ggplot(data = transData, aes(Site, TA)) + 
-  geom_boxplot(aes(color=Site)) + ylab('Tair (°C)') +
+  geom_boxplot(aes(color=Site), outlier.shape=NA) + ylab('Tair (°C)') +
   ggsave(filename = 'figures/transFluxFig.Climate.TA.png',
          width = 4.5, height = 3, units = 'in', dpi=300)
 
 ggplot(data = transData, aes(Site, WS)) + 
-  geom_boxplot(aes(color=Site)) + ylab('Wind speed (m/s)') +
+  geom_boxplot(aes(color=Site), outlier.shape=NA) + ylab('Wind speed (m/s)') +
+  ylim(0,8)
   ggsave(filename = 'figures/transFluxFig.Climate.WS.png',
          width = 4.5, height = 3, units = 'in', dpi=300)
 
 
 ggplot(data = transData, aes(Site, RH)) + 
-  geom_boxplot(aes(color=Site)) + ylab('Relative humidity (%)')+
+  geom_boxplot(aes(color=Site), outlier.shape=NA) + ylab('Relative humidity (%)')+
   ggsave(filename = 'figures/transFluxFig.Climate.RH.png',
          width = 4.5, height = 3, units = 'in', dpi=300)
 
 
 ggplot(data = transData, aes(Site, Rg)) + 
-  geom_boxplot(aes(color=Site)) + ylab('Solar radiation (W/m2')+
+  geom_boxplot(aes(color=Site), outlier.shape=NA) + ylab('Solar radiation (W/m2)')+
   ggsave(filename = 'figures/transFluxFig.Climate.Rg.png',
          width = 4.5, height = 3, units = 'in', dpi=300)
 
 
 ggplot(data = transData, aes(Site, VPD)) + 
-  geom_boxplot(aes(color=Site)) + ylab('VPD (kPa)')+
+  geom_boxplot(aes(color=Site), outlier.shape=NA) + ylab('VPD (kPa)') +
+  ylim(0,3)
   ggsave(filename = 'figures/transFluxFig.Climate.VPD.png',
          width = 4.5, height = 3, units = 'in', dpi=300)
 
