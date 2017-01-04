@@ -5,5 +5,9 @@ source('figures/transFluxFig.Predict.R')
 source('figures/transFluxFig.Betas.R')
 source('figures/transFluxFig.WindRain.R')
 source('figures/transFluxFig.SensTime.R')
+source('figures/transFluxFig.SiteCompare.R')
+source('figures/transFluxFig.FluxDiurnal.R')
+
+
 
 
