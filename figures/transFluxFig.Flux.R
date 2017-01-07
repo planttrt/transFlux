@@ -20,7 +20,6 @@ tmp <- transData.Orig$pkField[, .(SM=mean(SWC1, na.rm = T),
 png('figures/transFluxFig.Flux.png', width = 10, height = 5, units = 'in', res = 150)
 par(mar=c(3,8,2,4))
 plot(NA, xlim=c(0,365), ylim=c(0,1), xlab='',ylab='',xaxt='n', yaxt='n', bty='n')
-mtext('Day of year', side = 1, line = 1, cex = 1.2, font=2)
 
 
 
@@ -49,10 +48,15 @@ tmp[YEAR==2008, plot(DOY, TR, type='l', col=paste0(colList[2],'bb'),
                      xlab='',ylab='', lwd=2,ylim=c(0,5),
                      xaxt='n', yaxt='n', bty='n')]
 axis(side = 2, line = 5, col = colList[2], col.ticks = colList[2])
+
 mtext(text = 'Transpiration (mm/day)', side = 2, cex = 1.2, font = 2,
       line = 7, col = colList[2])
 
 legend(270, 4.5, legend = c('Transpiration','Precipitation','Soil Moisture'),
        lty = c(1,1,2), col=colList[c(2,1,3)], bty='n', cex=1.1, lwd=3)
+
+axis(side = 1, line = -1, at = seq(0,350, 50))
+mtext('Day of year', side = 1, line = 1.5, cex = 1.4, font=2)
+
 dev.off()
 

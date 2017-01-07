@@ -6,7 +6,7 @@ colnames(bg)
 
 png('figures/transFluxFig.Betas.png', res=150, width = 6, height = 4, units = 'in')
 par(mar=c(4,4,2,1))
-plotGibbsBoxplots(bg[,c("dT", "Solar", "LST4")], textAdj = 0, sigPlot = F, sort = F, labels = c('dT','Solar','Thermal'))
+plotGibbsBoxplots(bg[,c("dT", "Solar", "LST4")], textAdj = 0, sigPlot = F, sort = F, labels = c('dT','Solar','Thermal'), cex.label = 2)
 dev.off()
 
 

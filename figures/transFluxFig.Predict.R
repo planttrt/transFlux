@@ -63,3 +63,7 @@ legend('topright', legend = c('Predicted','Observed'),
 
 dev.off()
 
+
+RMSE <- rmse(y, yp.quant[1,])
+
+error <- mean(abs(yp.quant[1,]-y))
