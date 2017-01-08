@@ -1,6 +1,7 @@
 library(raster)
 library(maps)
 source('~/Projects/procVisData/colorSet.R')
+source('transAuxFuncs.R')
 
 ta <- lst <- ls <- list()
 for(i in 1:12){
@@ -12,11 +13,11 @@ for(i in 1:12)  ls[[i]] <- resample(lst[[i]],ta[[i]])
 lc <- raster('data/spatialdata/lc1.tif')
 lc <- resample(lc, ta[[1]], method='ngb' )
 
-png('figures/transFluxFig.dTSaptial.png', width = 12, height = 9, res = 300,  units = 'in')
-par(mfrow=c(3,4))
-for(i in 1:12){
-  dt <- ls[[i]]*.02-ta[[i]]-273.15
-  plot(dt)
-  map('usa', add=T)
-}
+dt <- list()
+for(i in 1:12)
+  dt[[i]] <- ls[[i]]*.02-ta[[i]]-273.15
+rng <- c(-15, 30)
+
+png('figures/transFluxFig.dTSpatial.png', width = 10, height = 7, res = 150,  units = 'in')
+plotMonthlySpatial(dt, colList.purpleOrange, rng, cexLegend = 1.5)
 dev.off()

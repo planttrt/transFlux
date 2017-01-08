@@ -115,10 +115,10 @@ dateToDOY <- function(y, m, d){
 library(rjags)
 
 lmJAGS <- function(x, y,
-                    n.chains=4,
-                    n.adapt=100,
-                    n.burnin=1000,
-                    n.gibbs=1000){
+                   n.chains=4,
+                   n.adapt=100,
+                   n.burnin=1000,
+                   n.gibbs=1000){
   model <- textConnection(
     "model {
     for (i in 1:N){
@@ -156,7 +156,7 @@ lmJAGS <- function(x, y,
                       n.gibbs)
   
   out
-  }
+}
 
 
 lmtJAGS <- function(x, y,
@@ -200,5 +200,47 @@ lmtJAGS <- function(x, y,
                       n.gibbs)
   
   out
+}
+
+
+
+plotMonthlySpatial <- function(rlist, colList, rng=NULL, 
+                               xlim=NULL, ylim=NULL, 
+                               legendPos= c(.78, .82, .05, .4),
+                               lwdContour=1, cexLegend =1,
+                               sameRange =T, nlevelsContour=5){
+  if(is.null(rng))rng <- range(sapply(rlist, function(x)(quantile(x@data@values, probs=c(.05, .95),na.rm = T))))
+  if(is.null(xlim)) xlim <- rlist[[1]]@extent[1:2]
+  if(is.null(ylim)) ylim <- rlist[[1]]@extent[3:4]
+  
+  tmp <- rlist[[1]]
+  lr <- raster(ncol=floor(ncol(tmp)/12),
+               nrow=floor(nrow(tmp)/12))
+  extent(lr) <- extent(tmp)
+  
+  col <- colorRampPalette(colList)(100)
+  par(mfrow=c(4,3), mar=c(0,0,1.5,0))
+  for(i in 1:12){
+    r <- rlist[[i]]
+    rlr  <- resample(r, lr)
+    par(bty='n')
+    if(!sameRange) rng <- range(dt[[1]]@data@values, na.rm = T)
+    plot(r, breaks=seq(rng[1], rng[2],length.out = 100),
+         xlim=xlim, ylim=ylim,
+         axes=FALSE,legend=FALSE,  col=col)
+    contour(rlr, nlevels = nlevelsContour, add=T, lwd=lwdContour)
+    
+    map('usa', add=T)
+    
+    mtext(month.name[i], line = 0, font = 2)
+    if(i==12|!sameRange){
+      par(bty='o')
+      image.plot(legend.only=TRUE, zlim= rng, 
+                 smallplot= legendPos,
+                 axis.args = list(cex.axis = cexLegend, font=2),
+                 legend.args = list(text= '', side=3,xpd=T, adj=0, line=.3, font=2), 
+                 col = col, horizontal = F, yaxt='s') 
+    }
+  }
 }
 

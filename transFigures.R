@@ -8,7 +8,7 @@ source('figures/transFluxFig.SensTime.R')
 source('figures/transFluxFig.SiteCompare.R')
 source('figures/transFluxFig.FluxDiurnal.R')
 
-source('figures/transFluxFig.dTSaptial.R')
+source('figures/transFluxFig.dTSpatial.R')
 source('figures/transFluxFig.dTSensSpatial.R')
 
 

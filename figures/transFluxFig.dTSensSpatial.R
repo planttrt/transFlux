@@ -52,72 +52,20 @@ for(i in 1:12){
 }
 
 
-
-col <- colorRampPalette(colList.Contad)(100)
-png('figures/transFluxFig.dTSensSpatial.png', width = 8, height = 6, res = 300,  units = 'in')
-rng <- range(sapply(sensdT, function(x)(range(x@data@values, na.rm = T))))
-par(mfrow=c(3,4), mar=c(0,0,1.5,0))
-for(i in 1:12){
-  plot(sensdT[[i]], breaks=seq(rng[1], rng[2],length.out = 100),
-       xlim=c(-90,-70), ylim=c(25,43),
-       axes=FALSE,legend=FALSE,  col=col)
-  # contour(sensdT0[[i]], levels = pretty(rng, 15), add=T)
-  contour(sensdT0[[i]], nlevels = 10, add=T)
-  map('usa', add=T)
-  mtext(month.name[i], line = 0, font = 2)
-  # if (i==12)colorbar.plot(-72, 30,strip = 1:100, col=col,
-  #                       horizontal = F, strip.width = .12, strip.length = .35)
-  if (i==12) image.plot(legend.only=TRUE, zlim= rng,
-             smallplot=c(.6, .66, .05, .4),
-             legend.args = list(text= '', side=3, adj=0, cex=1, line=.3, font=2), 
-             col = col, horizontal = F, yaxt='s') 
-}
+png('figures/transFluxFig.dTSensSpatial.png', width = 6.5, height = 9, res = 300,  units = 'in')
+plotMonthlySpatial(sensdT, colList.Contad, 
+                   nlevelsContour = 10,
+                   cexLegend = 1.5,lwdContour = 2,
+                   legendPos= c(.6, .7, .05, .4),
+                   xlim=c(-90,-75), ylim=c(25,40))
 dev.off()
 
 
-
-
-col <- colorRampPalette(colList.FunAndTropical)(100)
-png('figures/transFluxFig.dTSensSpatial2.png', width = 8, height = 6, res = 300,  units = 'in')
-rng <- range(sapply(sensdT2, function(x)(range(x@data@values, na.rm = T))))
-par(mfrow=c(3,4), mar=c(0,0,1.5,0))
-for(i in 1:12){
-  plot(sensdT2[[i]], breaks=seq(rng[1], rng[2],length.out = 100),
-       xlim=c(-90,-70), ylim=c(25,43),
-       axes=FALSE,legend=FALSE,  col=col)
-  # contour(sensdT2[[i]], levels = pretty(rng, 15), add=T)
-  contour(sensdT20[[i]], nlevels = 10, add=T)
-  
-  map('usa', add=T)
-  mtext(month.name[i], line = 0, font = 2)
-  # if (i==12)colorbar.plot(-72, 30,strip = 1:100, col=col,
-  #                       horizontal = F, strip.width = .12, strip.length = .35)
-  if (i==12) image.plot(legend.only=TRUE, zlim= rng,
-                        smallplot=c(.6, .66, .05, .4),
-                        legend.args = list(text= '', side=3, adj=0, cex=1, line=.3, font=2), 
-                        col = col, horizontal = F, yaxt='s') 
-}
+png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.png', width = 6.5, height = 9, res = 300,  units = 'in')
+plotMonthlySpatial(sensdT2, colList.orangePurple, 
+                   nlevelsContour = 10, 
+                   cexLegend = 1.5,lwdContour = 2,
+                   legendPos= c(.6, .7, .05, .4),
+                   xlim=c(-90,-75), ylim=c(25,40))
 dev.off()
-
-
-# 
-# col <- colorRampPalette(colList.FunAndTropical)(100)
-# png('figures/transFluxFig.LSTSensSpatial.png', width = 8, height = 6, res = 300,  units = 'in')
-# rng <- range(sapply(sensLST, function(x)(range(x@data@values, na.rm = T))))
-# par(mfrow=c(3,4), mar=c(0,0,1.5,0))
-# for(i in 1:12){
-#   plot(sensLST[[i]], breaks=seq(rng[1], rng[2],length.out = 100),
-#        xlim=c(-90,-70), ylim=c(25,43),
-#        axes=FALSE,legend=FALSE,  col=col)
-#   map('usa', add=T)
-#   mtext(month.name[i], line = 0, font = 2)
-#   # if (i==12)colorbar.plot(-72, 30,strip = 1:100, col=col,
-#   #                       horizontal = F, strip.width = .12, strip.length = .35)
-#   if (i==12) image.plot(legend.only=TRUE, zlim= rng,
-#                         smallplot=c(.6, .66, .05, .4),
-#                         legend.args = list(text= '', side=3, adj=0, cex=1, line=.3, font=2), 
-#                         col = col, horizontal = F, yaxt='s') 
-# }
-# 
-# dev.off()
 
