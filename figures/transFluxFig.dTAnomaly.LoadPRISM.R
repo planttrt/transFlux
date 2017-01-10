@@ -13,7 +13,7 @@ tAir.2016.MonthlyFiles <- dir(path = 'data/spatialdata/PRISM/2016/monthly/',
 tAir.2016.Monthly <- list()
 for(i in 1:12) tAir.2016.Monthly[[i]] <- raster(tAir.2016.MonthlyFiles[i])
 
-tAir.2015.MonthlyFiles <- dir(path = 'data/spatialdata/PRISM/2016/monthly/',
+tAir.2015.MonthlyFiles <- dir(path = 'data/spatialdata/PRISM/2015/monthly/',
                               pattern = '.bil$', full.names = T, recursive = T)
 # tAir.2015.MonthlyFiles
 tAir.2015.Monthly <- list()

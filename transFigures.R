@@ -10,6 +10,7 @@ source('figures/transFluxFig.FluxDiurnal.R')
 
 source('figures/transFluxFig.dTSpatial.R')
 source('figures/transFluxFig.dTSensSpatial.R')
+source('figures/transFluxFig.dTAnomaly.R')
 
 
 

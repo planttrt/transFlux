@@ -231,11 +231,12 @@ plotMonthlySpatial <- function(rlist,
     r <- rlist[[i]]
     rlr  <- resample(r, lr)
     par(bty='n')
-    if(!sameRange) rng <- range(dt[[1]]@data@values, na.rm = T)
+    if(!sameRange) rng <- range(r@data@values, na.rm = T)
     plot(r, breaks=seq(rng[1], rng[2],length.out = 100),
          xlim=xlim, ylim=ylim,
          axes=FALSE,legend=FALSE,  col=col)
-    contour(rlr, nlevels = nlevelsContour, add=T, lwd=lwdContour)
+    contour(rlr, nlevels = nlevelsContour, 
+            add=T, lwd=lwdContour, col='#666666')
     
     map('usa', add=T)
     
