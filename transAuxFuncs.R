@@ -1,3 +1,6 @@
+library(maps)
+library(raster)
+library(fields)
 calcSolar <- function(DOY, Lat, Slope=0, Aspect=0, Lon=0, SLon=0, DS=0, Elevation=0){
   
   #calculate solar radiation and related variables based on location, time and topographical conditions 
@@ -204,12 +207,16 @@ lmtJAGS <- function(x, y,
 
 
 
-plotMonthlySpatial <- function(rlist, colList, rng=NULL, 
+plotMonthlySpatial <- function(rlist, 
+                               colList = terrain.colors(10),
+                               rng=NULL, 
                                xlim=NULL, ylim=NULL, 
                                legendPos= c(.78, .82, .05, .4),
                                lwdContour=1, cexLegend =1,
                                sameRange =T, nlevelsContour=5){
-  if(is.null(rng))rng <- range(sapply(rlist, function(x)(quantile(x@data@values, probs=c(.05, .95),na.rm = T))))
+  
+  # if(is.null(rng))rng <- range(sapply(rlist, function(x)(quantile(x@data@values, probs=c(.05, .95),na.rm = T))), na.rm = T)
+  if(is.null(rng))rng <- range(sapply(rlist, quantile, probs=c(.05, .95),na.rm = T), na.rm = T)
   if(is.null(xlim)) xlim <- rlist[[1]]@extent[1:2]
   if(is.null(ylim)) ylim <- rlist[[1]]@extent[3:4]
   
@@ -243,4 +250,8 @@ plotMonthlySpatial <- function(rlist, colList, rng=NULL,
     }
   }
 }
-
+rMean <- function(rList){
+  m <- rList[[1]]
+  for(i in 2:length(rList)) m <- m + rList[[i]]
+  m/length(rList)
+}
