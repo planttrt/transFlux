@@ -2,6 +2,7 @@ library(raster)
 library(maps)
 source('~/Projects/procVisData/colorSet.R')
 source('transAuxFuncs.R')
+forest <- raster('data/spatialdata/forest.tif')
 
 ta <- lst <- ls <- list()
 for(i in 1:12){

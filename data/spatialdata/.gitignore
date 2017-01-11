@@ -2,3 +2,6 @@ MODIS
 PRISM
 MODIS.TIFF
 toTIFF
+NLCD
+anomaly
+forest.tif
