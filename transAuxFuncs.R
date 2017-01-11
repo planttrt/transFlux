@@ -70,7 +70,7 @@ calcSolar <- function(DOY, Lat, Slope=0, Aspect=0, Lon=0, SLon=0, DS=0, Elevatio
   
   
   
-  list(Daylength=DayLength ,Altitude=Altitude, Azimuth=Azimuth, Incidence=Incidence, Sdiropen=Sdiropen, Sdifopen=Sdifopen)
+  list(Daylength=DayLength ,Altitude=Altitude, Azimuth=Azimuth, Incidence=Incidence, Sdiropen=Sdiropen, Sdifopen=Sdifopen, Stotopen=Sdifopen + Sdiropen)
 }
 
 readAmeriFlux <- function(folder){

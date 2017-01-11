@@ -21,38 +21,25 @@ colnames(bothSites$pk$x)
 
 names(bgMean) <- colnames(bothSites$pk$x)
 
-# solrasters <- list()
-# for(i in 1:12){
-# pts <- as.data.table(rasterToPoints(lc))
-# colnames(pts) <- c('lon','lat','lc')
-# setcolorder(pts, neworder = c('lat','lon','lc'))
-# pts[, sol:=calcSolar(lat, DOY = 0.5+(i-.5)*30)$Sdiropen]
-# coordinates(pts) <- ~ lon+lat
-# rast <- raster(nrow=nrow(lc), ncol=ncol(lc))
-# extent(rast) <- extent(lc) 
-# solrasters[[i]] <- rasterize(pts, rast, pts$sol, fun = mean)
-# 
-# }
-# save(solrasters, "solrasters.RData")
+source('figures/transFluxFig.CalcSolarWithCloud.R')
 
-load('solrasters.RData')
 
 sensdT0 <- sensdT <- sensdT2 <-  sensdT20 <- sensLST <- list()
 for(i in 1:12){
-  sensLST[[i]] <- bgMean['dT'] + bgMean['LST4']*4*(ls[[i]])^3+ bgMean['TA.dT']*ta[[i]]
-  sensLST[[i]][lc>5] <- NA
+  # sensLST[[i]] <- bgMean['dT'] + bgMean['LST4']*4*(ls[[i]])^3+ bgMean['TA.dT']*ta[[i]]
+  # sensLST[[i]][lc>5] <- NA
 
   sensdT0[[i]] <- bgMean['dT'] + bgMean['TA.dT']*ta[[i]] 
   sensdT[[i]] <- sensdT0[[i]] 
   sensdT[[i]][lc>5] <- NA
   
-  sensdT20[[i]] <- bgMean['dT'] + bgMean['TA.dT']*ta[[i]] + bgMean['Solar.dT']*solrasters[[i]]*.5
+  sensdT20[[i]] <- bgMean['dT'] + bgMean['TA.dT']*ta[[i]] + bgMean['Solar.dT']*solcloudraster[[i]]
   sensdT2[[i]] <- sensdT20[[i]] 
   sensdT2[[i]][lc>5] <- NA
 }
 
 
-png('figures/transFluxFig.dTSensSpatial.png', width = 6.5, height = 9, res = 300,  units = 'in')
+png('figures/transFluxFig.dTSensSpatial.WithoutSolarEffect.png', width = 6.5, height = 9, res = 300,  units = 'in')
 plotMonthlySpatial(sensdT, colList.Contad, 
                    nlevelsContour = 10,
                    cexLegend = 1.5,lwdContour = 2,
@@ -62,10 +49,34 @@ dev.off()
 
 
 png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.png', width = 6.5, height = 9, res = 300,  units = 'in')
-plotMonthlySpatial(sensdT2, colList.orangePurple, 
+plotMonthlySpatial(sensdT2, colList.Contad, 
                    nlevelsContour = 10, 
                    cexLegend = 1.5,lwdContour = 2,
                    legendPos= c(.6, .7, .05, .4),
                    xlim=c(-90,-75), ylim=c(25,40))
+dev.off()
+
+
+
+eco <- shapefile('~/Projects/traitsModel/data/maps/ecoregions/eco_us_latlon_provMerged.shp')
+physio <- shapefile('~/Projects/traitsModel/data/maps/physioProvinceLatLon/physioProvinceLatLon.shp')
+
+
+r <- rMean(sensdT[7:9])
+png('figures/transFluxFig.dTSensSpatial.WithoutSolarEffect.Summer.png', width = 6, height = 6, res = 300,  units = 'in')
+plot(r,xlim=c(-90,-75), ylim=c(25,40),
+     col=colorRampPalette(colList.purpleOrange)(100))
+map('usa', add = T)
+plot(physio, add=T)
+dev.off()
+
+
+
+r <- rMean(sensdT2[7:9])
+png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.Summer.png', width = 6, height = 6, res = 300,  units = 'in')
+plot(r, xlim=c(-90,-75), ylim=c(25,40),
+     col=colorRampPalette(colList.purpleOrange)(100))
+map('usa', add = T)
+plot(physio, add=T)
 dev.off()
 
