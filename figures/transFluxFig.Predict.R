@@ -46,7 +46,12 @@ yp.quant <- apply(yp, 1, quantile, c(0.5, .025, .975, .25,.75))
 
 plot(ytime, y, type='l', lty=2,
      xlim = c(2007.5, 2008.8),
-     xlab='Year', ylab = 'Transpiration (mm/day)')
+     xlab='', ylab = '')
+mtext('Time (year)',side = 1, font=2, line = 3)
+win <- par('usr')
+text(label='Transpiration (mm/day)', xpd=T, font=2,
+     x=mean(win[1])-.12, y=mean(win[3:4]), srt=270)
+
 # lines(ytime, yp.quant[2,], col='#888888')
 # lines(ytime, yp.quant[3,], col='888888')
 polygon(x = c(ytime, rev(ytime)),

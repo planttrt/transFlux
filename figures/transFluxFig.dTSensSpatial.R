@@ -17,7 +17,7 @@ names(bgMean) <- colnames(bothSites$pk$x)
 
 source('figures/transFluxFig.CalcSolarWithCloud.R')
 
-
+# lc <- resample(raster('data/spatialdata/lc1.tif'), ta[[1]], method='ngb')
 sensdT0 <- sensdT <- sensdT2 <-  sensdT20 <- sensLST <- list()
 for(i in 1:12){
   # sensLST[[i]] <- bgMean['dT'] + bgMean['LST4']*4*(ls[[i]])^3+ bgMean['TA.dT']*ta[[i]]
@@ -33,38 +33,34 @@ for(i in 1:12){
 }
 
 
-png('figures/transFluxFig.dTSensSpatial.WithoutSolarEffect.NotClipped.png', width = 6.5, height = 9, res = 300,  units = 'in')
-plotMonthlySpatial(sensdT0, colList.Contad, 
-                   nlevelsContour = 10,
+png('figures/transFluxFig.dTSensSpatial.WithoutSolarEffect.png',
+    width = 5, height = 7, res = 300,  units = 'in')
+par(mar=c(0,0,1,0), oma=c(0,0,0,0))
+rng <- c(-.40, -.35)
+plotMonthlySpatial(sensdT0[5:10], colList.Contad, arrangeMat = c(3,2),
+                   nlevelsContour = 10,rng = rng, 
                    cexLegend = 1.5,lwdContour = 2,
-                   legendPos= c(.6, .7, .05, .4),
-                   xlim=c(-90,-75), ylim=c(25,40))
-dev.off()
-
-png('figures/transFluxFig.dTSensSpatial.WithoutSolarEffect.png', width = 6.5, height = 9, res = 300,  units = 'in')
-plotMonthlySpatial(sensdT, colList.Contad, 
-                   nlevelsContour = 10,
-                   cexLegend = 1.5,lwdContour = 2,
-                   legendPos= c(.6, .7, .05, .4),
-                   xlim=c(-90,-75), ylim=c(25,40))
+                   legendPos= c(.6, .7, .04, .5),
+                   xlim=c(-90,-75), ylim=c(25,40),
+                   lables = month.name[5:10])
 dev.off()
 
 
-png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.NotClipped.png', width = 6.5, height = 9, res = 300,  units = 'in')
-plotMonthlySpatial(sensdT20, colList.Contad, 
-                   nlevelsContour = 10, 
+
+
+png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.png',
+    width = 5, height = 7, res = 300,  units = 'in')
+par(mar=c(0,0,1,0), oma=c(0,0,0,0))
+rng <- c(-.35, -.15)
+plotMonthlySpatial(sensdT20[5:10], colList.Contad, arrangeMat = c(3,2),
+                   nlevelsContour = 10,rng = rng, 
                    cexLegend = 1.5,lwdContour = 2,
-                   legendPos= c(.6, .7, .05, .4),
-                   xlim=c(-90,-75), ylim=c(25,40))
+                   legendPos= c(.6, .7, .04, .5),
+                   xlim=c(-90,-75), ylim=c(25,40),
+                   lables = month.name[5:10])
 dev.off()
 
-png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.png', width = 6.5, height = 9, res = 300,  units = 'in')
-plotMonthlySpatial(sensdT2, colList.Contad, 
-                   nlevelsContour = 10, 
-                   cexLegend = 1.5,lwdContour = 2,
-                   legendPos= c(.6, .7, .05, .4),
-                   xlim=c(-90,-75), ylim=c(25,40))
-dev.off()
+
 
 
 
@@ -73,44 +69,31 @@ physio <- shapefile('~/Projects/traitsModel/data/maps/physioProvinceLatLon/physi
 
 
 r <- rMean(sensdT0[7:9])
+rng <- c(-.40, -.35)
+r[r<rng[1]] <- rng[1]
+r[r>rng[2]] <- rng[2]
 png('figures/transFluxFig.dTSensSpatial.WithoutSolarEffect.NotClipped.Summer.png', width = 6, height = 6, res = 300,  units = 'in')
 par(mar=c(3,3,4,1))
-plot(r,xlim=c(-90,-75), ylim=c(25,40),
-     col=colorRampPalette(colList.orangePurple)(100))
+plot(r,xlim=c(-90,-75), ylim=c(25,40),zlim=rng,
+     col=colorRampPalette(rev(colList.Contad))(100))
 map('usa', add = T)
 plot(physio, add=T)
-mtext(expression(paste('Sensitivity of ',Delta,'T w/o solar effects, summer 2015')), font=2, line = 1.5, cex=1.5)
+mtext('Sensitivity to ∆T, Jul-Aug-Sept', font=2, line = 2, cex=1.5)
+mtext(expression('(b) without solar radiation effects'), font=2, line = .1, cex=1.5)
 dev.off()
-
-r <- rMean(sensdT[7:9])
-png('figures/transFluxFig.dTSensSpatial.WithoutSolarEffect.Summer.png', width = 6, height = 6, res = 300,  units = 'in')
-par(mar=c(3,3,4,1))
-plot(r,xlim=c(-90,-75), ylim=c(25,40),
-     col=colorRampPalette(colList.orangePurple)(100))
-map('usa', add = T)
-plot(physio, add=T)
-mtext(expression(paste('Sensitivity of ',Delta,'T w/o solar effects, summer 2015')), font=2, line = 1.5, cex=1.5)
-dev.off()
-
 
 
 r <- rMean(sensdT20[7:9])
+rng <- c(-.29, -.26)
+r[r<rng[1]] <- rng[1]
+r[r>rng[2]] <- rng[2]
 png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.Summer.NotClipped.png', width = 6, height = 6, res = 300,  units = 'in')
 par(mar=c(3,3,4,1))
-plot(r, xlim=c(-90,-75), ylim=c(25,40),
-     col=colorRampPalette(colList.orangePurple)(100))
+plot(r, xlim=c(-90,-75), ylim=c(25,40),zlim=rng,
+     col=colorRampPalette(rev(colList.Contad))(100))
 map('usa', add = T)
 plot(physio, add=T)
-mtext(expression(paste('Sensitivity of ',Delta,'T, summer 2015')), font=2, line = 1.5, cex=1.5)
-dev.off()
-
-r <- rMean(sensdT2[7:9])
-png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.Summer.png', width = 6, height = 6, res = 300,  units = 'in')
-par(mar=c(3,3,4,1))
-plot(r, xlim=c(-90,-75), ylim=c(25,40),
-     col=colorRampPalette(colList.orangePurple)(100))
-map('usa', add = T)
-plot(physio, add=T)
-mtext(expression(paste('Sensitivity of ',Delta,'T, summer 2015')), font=2, line = 1.5, cex=1.5)
+mtext('Sensitivity to ∆T, Jul-Aug-Sept', font=2, line = 2, cex=1.5)
+mtext(expression('(a) with solar radiation effects'), font=2, line = .1, cex=1.5)
 dev.off()
 

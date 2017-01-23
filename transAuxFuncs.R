@@ -213,7 +213,10 @@ plotMonthlySpatial <- function(rlist,
                                xlim=NULL, ylim=NULL, 
                                legendPos= c(.78, .82, .05, .4),
                                lwdContour=1, cexLegend =1,
-                               sameRange =T, nlevelsContour=5){
+                               sameRange =T, nlevelsContour=5,
+                               showContour=T,
+                               arrangeMat=c(4,3),
+                               lables=month.name){
   
   # if(is.null(rng))rng <- range(sapply(rlist, function(x)(quantile(x@data@values, probs=c(.05, .95),na.rm = T))), na.rm = T)
   if(is.null(rng))rng <- range(sapply(rlist, quantile, probs=c(.05, .95),na.rm = T), na.rm = T)
@@ -226,22 +229,24 @@ plotMonthlySpatial <- function(rlist,
   extent(lr) <- extent(tmp)
   
   col <- colorRampPalette(colList)(100)
-  par(mfrow=c(4,3), mar=c(0,0,1.5,0))
-  for(i in 1:12){
+  par(mfrow=arrangeMat, mar=c(0,0,1.5,0))
+  for(i in 1:length(rlist)){
     r <- rlist[[i]]
+    r[r<rng[1]] <- rng[1]
+    r[r>rng[2]] <- rng[2]
     rlr  <- resample(r, lr)
     par(bty='n')
     if(!sameRange) rng <- range(r@data@values, na.rm = T)
     plot(r, breaks=seq(rng[1], rng[2],length.out = 100),
          xlim=xlim, ylim=ylim,
          axes=FALSE,legend=FALSE,  col=col)
-    contour(rlr, nlevels = nlevelsContour, 
-            add=T, lwd=lwdContour, col='#666666')
+    if(showContour)
+      contour(rlr, nlevels = nlevelsContour, add=T, lwd=lwdContour, col='#666666')
     
     map('usa', add=T)
     
-    mtext(month.name[i], line = 0, font = 2)
-    if(i==12|!sameRange){
+    mtext(lables[i], line = 0, font = 2)
+    if(i==length(rlist)|!sameRange){
       par(bty='o')
       image.plot(legend.only=TRUE, zlim= rng, 
                  smallplot= legendPos,

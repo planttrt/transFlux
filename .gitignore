@@ -6,3 +6,6 @@ ameriflux_data
 papers
 test.R
 *.Rdata
+tmp.R
+tmp
+pngToRaster.R

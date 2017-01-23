@@ -118,16 +118,16 @@ r [r> rng[2]] <- rng[2]
 # rp <- as.data.table(rasterToPoints(r))
 # n <- 100
 # bks <- rp[x > -90 & x < -70 & y > 25 & y < 40, quantile(layer, probs=seq(0,1, length.out = n))]
-png('figures/transFluxFig.dTAnomaly.USA.Summer.png', width = 9, height = 5, res = 300,  units = 'in')
-par(mar=c(3,3,4,1))
+png('figures/transFluxFig.dTAnomaly.USA.Summer.png', width = 8, height = 5, res = 300,  units = 'in')
+par(mar=c(3,3,3,1))
 plot(r, 
      # xlim=c(-90.5,-74.5), ylim=c(25,40), 
      zlim=rng, #breaks=bks,
      col=colorRampPalette(colList.purpleOrange)(100))
 map('usa', add = T)
 plot(physio, add=T)
-mtext(expression(paste('Anomaly of thermal stress (',Delta,'T), summer 2015')), font=2, line = 2, cex=1.5)
-mtext(expression(paste(Delta,'T=T'[surface],'-T'[air])), cex=1.5, font=2, line=.5)
+mtext(expression(paste('Anomaly of thermal stress (∆T), across USA in summer 2015')), font=2, line = 1, cex=1.5)
+# mtext(expression(paste(Delta,'T=T'[surface],'-T'[air])), cex=1.5, font=2, line=.5)
 dev.off()
 
 # rp <- as.data.table(rasterToPoints(r))
