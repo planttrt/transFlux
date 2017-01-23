@@ -12,10 +12,15 @@ transData[Site=='BW', plot(YearCon, TR,
 legend('topright', legend = c('Transpiraiton', 'ET'),
        col = c( col=colList[c(1,5)]), bty = 'n',
        lty=1, lwd=4)
+mtext('BW', side = 3, line = -3, cex=3,
+      font = 2, adj = 0.02, col='#444444')
+
 transData[Site=='PK', plot(YearCon, TR,
                            type='l',  col=colList[1], lwd=2,
                            xlim = c(2007,2010), ylim=c(0,20),
                            xlab='Time (Year)', ylab='Flux (mm/day)')]
 transData[Site=='PK', lines(YearCon, ET, type='l', col=colList[5], lwd=2)]
+mtext('PK', side = 3, line = -3, cex=3,
+      font = 2, adj = 0.02, col='#444444')
 dev.off()
 

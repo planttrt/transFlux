@@ -3,7 +3,6 @@
 .RData
 .Ruserdata
 ameriflux_data
-tmp
 papers
 test.R
 *.Rdata

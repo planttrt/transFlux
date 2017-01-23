@@ -67,3 +67,21 @@ save(list = c('bothSites','xydata','transData', 'transData.Orig'), file = 'bothS
 # 
 # summary(out2$betaStd)
 # summary(out2$simaStd)
+colnames(bothSites$pk$x)
+
+betasum0 <- data.frame(beta = c('Intercept','ΔT','Solar','Thermal','Tair:ΔT','Solar:ΔT','windy:ΔT','rainy:ΔT'), 
+                      mean = apply(bothSites$pk$out$beta, 1, mean),
+                      std = apply(bothSites$pk$out$beta, 1, sd))
+betasum1 <- data.frame(beta = c('BW'), 
+                       mean = mean(bothSites$pk$out$beta[1,,]-bothSites$bw$out$beta[1,,]),
+                       std = sd(bothSites$pk$out$beta[1,,]-bothSites$bw$out$beta[1,,]))
+
+betasum2 <- data.frame(beta = c('Solar:BW'), 
+                      mean = mean(bothSites$pk$out$beta[3,,]-bothSites$bw$out$beta[3,,]),
+                      std = sd(bothSites$pk$out$beta[3,,]-bothSites$bw$out$beta[3,,]))
+betasum3 <- data.frame(beta = c('Thermal:BW'), 
+                       mean = mean(bothSites$pk$out$beta[4,,]-bothSites$bw$out$beta[4,,]),
+                       std = sd(bothSites$pk$out$beta[4,,]-bothSites$bw$out$beta[4,,]))
+betasum <- rbind(betasum0, betasum1, betasum2, betasum3)
+betasum[,-1] <- signif(betasum[,-1], 2)
+write.csv(betasum, 'betasum.csv')

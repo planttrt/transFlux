@@ -4,18 +4,10 @@ library(fields)
 library(maps)
 source('~/Projects/procVisData/colorSet.R')
 source('transAuxFuncs.R')
-fsta <- dir('data/spatialdata/PRISM/2015/monthly/', pattern = '.bil$', full.names = T, recursive = T)
-ta <- lst <- ls <- list()
-for(i in 1:12){
-  # lst[[i]] <- raster(paste0('data/spatialdata/toTIFF/tLST.Mean.Monthly.',i,'.tif'))
-  ta[[i]] <- raster(fsta[i])
-  # lst[[i]] <- raster(paste0('data/spatialdata/2016/lst',i,'.tif'))
-  # ta[[i]] <- raster(paste0('data/spatialdata/2016/ta',i,'.tif'))
-}
-# for(i in 1:12)  ls[[i]] <- resample(lst[[i]],ta[[i]])
 
-lc <- raster('data/spatialdata/lc1.tif')
-lc <- resample(lc, ta[[1]], method='ngb' )
+ta <- sapply(dir('data/spatialdata/PRISM/2015/monthly/', pattern = '.bil$', full.names = T, recursive = T),
+             raster)
+
 
 bg <- bothSites$pk$out$beta
 bgMean <- apply(bg, 1, mean)

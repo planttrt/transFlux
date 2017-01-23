@@ -44,7 +44,7 @@ polygon(x = c(ytime, rev(ytime)),
         # y = c(quant[,4], rev(quant[,5])),
         border = NA, col = '#8888aa88')
 abline(h=0, lwd=2, lty=2, col='#0066cc')
-mtext('Total effect', side = 3, line = -1.5, font = 2, adj = 0.05, col='#444444')
+mtext('(a) Total effect', side = 3, line = -1.5, font = 2, adj = 0.05, col='#444444')
 
 quant <- sensSolar.quant
 plot(ytime, quant[,1], type='l', lty=1, lwd=2,
@@ -55,7 +55,7 @@ polygon(x = c(ytime, rev(ytime)),
         # y = c(quant[,4], rev(quant[,5])),
         border = NA, col = '#8888aa88')
 abline(h=0, lwd=2, lty=2, col='#0066cc')
-mtext('Solar radiation effect', side = 3, line = -1.5, font = 2, adj = 0.05, col='#444444')
+mtext('(b) Solar radiation effect', side = 3, line = -1.5, font = 2, adj = 0.05, col='#444444')
 
 quant <- sensTA.quant
 plot(ytime, quant[,1], type='l', lty=1, lwd=2,
@@ -66,7 +66,7 @@ polygon(x = c(ytime, rev(ytime)),
         # y = c(quant[,4], rev(quant[,5])),
         border = NA, col = '#8888aa88')
 abline(h=0, lwd=2, lty=2, col='#0066cc')
-mtext('Air temperature effect', side = 3, line = -1.5, font = 2, adj = 0.05, col='#444444')
+mtext('(c) Air temperature effect', side = 3, line = -1.5, font = 2, adj = 0.05, col='#444444')
 
 mtext('Day of year', side = 1, line = 2.5, font=2, outer = T, cex=1.3)
 mtext('Sensitivity to dT', side = 2, line = 3, font=2, outer = T, cex=1.3)

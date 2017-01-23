@@ -29,6 +29,7 @@ plotObsPred(y, rowMeans(yp), xlim = c(0,8), ylim=c(0,8),
 # points(y, rowMeans(yp), col=col, pch=pch, cex=.8)
 
 abline(0,1, col='#2255aa', lwd=2, lty=2)
+title('in-sample')
 
 plot(y[w], rowMeans(yp)[w], xlim = c(0,8), ylim=c(0,8), pch=15, 
      xlab = 'Observed TR (mm/day)',
