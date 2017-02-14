@@ -25,11 +25,11 @@ for(i in 1:12){
 
   sensdT0[[i]] <- bgMean['dT'] + bgMean['TA.dT']*ta[[i]] 
   sensdT[[i]] <- sensdT0[[i]] 
-  sensdT[[i]][lc>5] <- NA
+  # sensdT[[i]][lc>5] <- NA
   
   sensdT20[[i]] <- bgMean['dT'] + bgMean['TA.dT']*ta[[i]] + bgMean['Solar.dT']*solcloudraster[[i]]
   sensdT2[[i]] <- sensdT20[[i]] 
-  sensdT2[[i]][lc>5] <- NA
+  # sensdT2[[i]][lc>5] <- NA
 }
 
 
@@ -75,7 +75,7 @@ r[r>rng[2]] <- rng[2]
 png('figures/transFluxFig.dTSensSpatial.WithoutSolarEffect.NotClipped.Summer.png', width = 6, height = 6, res = 300,  units = 'in')
 par(mar=c(3,3,4,1))
 plot(r,xlim=c(-90,-75), ylim=c(25,40),zlim=rng,
-     col=colorRampPalette(rev(colList.Contad))(100))
+     col=colorRampPalette((colList.Contad))(100))
 map('usa', add = T)
 plot(physio, add=T)
 mtext('Sensitivity to ∆T, Jul-Aug-Sept', font=2, line = 2, cex=1.5)
@@ -90,10 +90,26 @@ r[r>rng[2]] <- rng[2]
 png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.Summer.NotClipped.png', width = 6, height = 6, res = 300,  units = 'in')
 par(mar=c(3,3,4,1))
 plot(r, xlim=c(-90,-75), ylim=c(25,40),zlim=rng,
-     col=colorRampPalette(rev(colList.Contad))(100))
+     col=colorRampPalette((colList.Contad))(100))
 map('usa', add = T)
 plot(physio, add=T)
 mtext('Sensitivity to ∆T, Jul-Aug-Sept', font=2, line = 2, cex=1.5)
 mtext(expression('(a) with solar radiation effects'), font=2, line = .1, cex=1.5)
+dev.off()
+
+
+
+r <- rMean(sensdT20[7:9])
+rng <- c(-.29, -.26)
+r[r<rng[1]] <- rng[1]
+r[r>rng[2]] <- rng[2]
+png('figures/transFluxFig.dTSensSpatial.WithSolarEffect.Summer.NotClipped.USA.png', width = 6, height = 6, res = 300,  units = 'in')
+par(mar=c(3,3,4,1))
+plot(r, xlim=c(-95,-65), ylim=c(25,50),zlim=rng,
+     col=colorRampPalette((colList.Contad))(100))
+map('usa', add = T)
+plot(physio, add=T)
+mtext('Sensitivity to ∆T, Jul-Aug-Sept', font=2, line = 2, cex=1.5)
+# mtext(expression('(a) with solar radiation effects'), font=2, line = .1, cex=1.5)
 dev.off()
 

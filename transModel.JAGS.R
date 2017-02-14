@@ -77,8 +77,8 @@ betasum1 <- data.frame(beta = c('BW'),
                        std = sd(bothSites$pk$out$beta[1,,]-bothSites$bw$out$beta[1,,]))
 
 betasum2 <- data.frame(beta = c('Solar:BW'), 
-                      mean = mean(bothSites$pk$out$beta[3,,]-bothSites$bw$out$beta[3,,]),
-                      std = sd(bothSites$pk$out$beta[3,,]-bothSites$bw$out$beta[3,,]))
+                      mean = mean(bothSites$bw$out$beta[3,,]-bothSites$pk$out$beta[3,,]),
+                      std = sd(bothSites$bw$out$beta[3,,]-bothSites$pk$out$beta[3,,]))
 betasum3 <- data.frame(beta = c('Thermal:BW'), 
                        mean = mean(bothSites$pk$out$beta[4,,]-bothSites$bw$out$beta[4,,]),
                        std = sd(bothSites$pk$out$beta[4,,]-bothSites$bw$out$beta[4,,]))

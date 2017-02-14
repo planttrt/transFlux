@@ -16,3 +16,11 @@ source('figures/transFluxFig.FluxDiurnal.R')
 source('figures/transFluxFig.dT.Monthly.USA.R')
 source('figures/transFluxFig.dTAnomaly.Monthly.USA.R')
  source('figures/transFluxFig.dTSensSpatial.R')
+
+source('figures/transFluxFig.physioMaps.R')
+source('figures/transFluxFig.VI.Map.R')
+
+
+source('figures/transFluxFig.dTvsTrans.R')
+source('figures/transFluxFig.dTvsNDVI.R')
+

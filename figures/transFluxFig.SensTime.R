@@ -1,10 +1,11 @@
 source('~/Projects/procVisData/dataViz.R')
-
+library(data.table)
 beta <- t(apply(bothSites$pk$out$beta, c(1,2), mean))/sd(bothSites$pk$y)
 colnames(beta) <- colnames(bothSites$pk$x)
 
 # str(beta)
 sites <- c("BW","PK")
+labs <- c('Peidmont','Coast')
 colSite <- c('#1C32BD80', '#da424080')
 
 for(i in 1:2){
@@ -79,7 +80,7 @@ for(i in 1:2){
   
   mtext('Day of year', side = 1, line = 2.5, font=2, outer = T, cex=1.3)
   mtext('Sensitivity to ∆T', side = 2, line = 3, font=2, outer = T, cex=1.3)
-  mtext(paste0('Sensitivity to ∆T at ',site), font=2, cex=1.2, outer = T, line=1)
+  mtext(paste0('Sensitivity to ∆T at ',labs[i]), font=2, cex=1.2, outer = T, line=1)
   dev.off()
 }
 

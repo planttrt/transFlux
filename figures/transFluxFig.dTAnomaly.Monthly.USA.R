@@ -16,13 +16,12 @@ rng <- c(-2,2)
 r [r< rng[1]] <- rng[1]
 r [r> rng[2]] <- rng[2]
 png('figures/transFluxFig.dTAnomaly.USA.Summer.png', width = 8, height = 5, res = 300,  units = 'in')
-par(mar=c(3,3,3,1))
-plot(r, 
+par(mar=c(0,0,0,0), bty='n')
+plot(r, axes=F,
      # xlim=c(-90.5,-74.5), ylim=c(25,40), 
      zlim=rng, #breaks=bks,
      col=colorRampPalette(colList.purpleOrange)(100))
 map('usa', add = T)
 plot(physio, add=T)
-mtext(expression(paste('Anomaly of thermal stress (∆T), across USA in summer 2015')), font=2, line = 1, cex=1.5)
-# mtext(expression(paste(Delta,'T=T'[surface],'-T'[air])), cex=1.5, font=2, line=.5)
+mtext('Anomaly of thermal stress (∆T), across USA in summer 2015', cex=1.5, font=2, line = -2, outer = T)
 dev.off()

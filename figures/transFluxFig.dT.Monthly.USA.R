@@ -18,13 +18,14 @@ dev.off()
 r <- rMean(r[6:9])
 r [r< rng[1]] <- rng[1]
 r [r> rng[2]] <- rng[2]
+
 png('figures/transFluxFig.dT.Summer.USA.png', width = 8, height = 5, res = 300,  units = 'in')
-par(mar=c(3,3,3,1))
-plot(r, 
+par(mar=c(0,0,0,0), bty='n')
+plot(r, axes=F,
      # xlim=c(-90.5,-74.5), ylim=c(25,40), 
      zlim=rng, #breaks=bks,
      col=colorRampPalette(colList)(100))
 map('usa', add = T)
 plot(physio, add=T)
-mtext(expression(paste('Thermal stress (∆T) across USA')), font=2, line = 1, cex=1.5)
+mtext('Thermal stress (∆T) across USA', cex=2, font=2, line = -2)
 dev.off()
