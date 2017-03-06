@@ -1,6 +1,6 @@
 library(gjam)
 
-load('~/Downloads/forestTraits.RData')
+load('data/forestTraits.RData')
 traitTypes <- forestTraits$traitTypes
 
 x <- read.csv('~/Projects/traitsModel/data/post/plotByX.csv')
@@ -23,7 +23,20 @@ source('~/Projects/procVisData/geoSpatial.R')
 source('~/Projects/procVisData/colorProc.R')
 source('~/Projects/procVisData/colorSet.R')
 
-png('figures/xylim-ring.png', res=300, units = 'in', height = 7, width = 6)
-mapColorData(x$plotLon, x$plotLat, tmp$plotByCWM[,"ring"], colList = colList.Contad, symSize = .7)
-title('Xylem - Ring')
+png('figures/transFluxFig.HydroTraits.png', res=300, units = 'in', height = 6, width = 6)
+par(oma=c(2,2,2,1), mfrow=c(2,2), mar=c(0,0,1,0))
+for(traits in c('leafN','leafP','SLA','ring')){
+  # plot(NA, xlim=c(-90,-75), ylim=c(25,40), xlab='',ylab='', bty='n', axes=F)
+  plot(physio, xlim=c(-90,-75), ylim=c(25,40), axes=F)
+  mapColorData(x$plotLon, x$plotLat, tmp$plotByCWM[,traits], 
+               colList = colList.Contad, symSize = .4, ADD = T)
+mtext(text = traits)
+    plot(physio, add=T)
+}
+# map('usa', add = T)
 dev.off()
+
+
+
+
+

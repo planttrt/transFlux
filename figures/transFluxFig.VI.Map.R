@@ -12,11 +12,12 @@ ndvi <- resample(ndvi, rsmp)
 ndvi[is.na(resample(usaRaster, ndvi, method='ngb'))] <- NA
 
 
-png('figures/transFluxFig.VI.Map.png', width = 8, height = 5, res = 300,  units = 'in')
-par(mar=c(0,0,0,0), bty='n')
+png('figures/transFluxFig.VI.Map.png', width = 6.5, height = 3.5, res = 300,  units = 'in')
+par(mar=c(0,0,2,0), bty='n')
 plot(ndvi, zlim=c(0,1), axes=F,
      col=colorRampPalette(colList.brownGreen)(1000))
 map('usa',add=T)    
 plot(physio, add=T)
-mtext('NDVI across USA, July 2015', cex=2, font=2, line = -2)
+mtext('NDVI', cex=2, font=2, line = 0)
+mtext('(a)', cex=2, font=2, line = 0, adj=0)
 dev.off()

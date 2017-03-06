@@ -37,13 +37,14 @@ DT[!LCid%in%c(0:14), LC:=as.factor('Others')]
 # g +  geom_point(aes(col=LC)) +geom_smooth(method = 'lm', aes()) + ggsave('figures/transFluxFig.dTvsNDVI.png', width = 6, height = 6, units = 'in', dpi = 150)
 # g +  geom_point(aes(col=LC)) +geom_smooth(method = 'lm', aes(lty=LC)) + ggsave('figures/transFluxFig.dTvsNDVI2.png', width = 6, height = 6, units = 'in', dpi = 150)
 
-ggplot(DT[!LC%in%c('Others','Water','Wetlands'),], aes(ΔT, NDVI)) +
+ggplot(DT[!LC%in%c('Others','Water','Wetlands', 'Urban','Shrublands'),], aes(ΔT, NDVI)) +
+  # ggplot(DT[!LC%in%c('Others','Water','Wetlands'),], aes(ΔT, NDVI)) +
   geom_point(alpha = 0.05, size=.1) +
   geom_smooth(method = 'lm', aes()) +
   facet_grid(LC~.) + 
   xlim(0,25) + 
   ylim(0,1) +
-  ggsave('figures/transFluxFig.dTvsNDVI.png', width = 3,  height = 9, units = 'in', dpi = 150)
+  ggsave('figures/transFluxFig.dTvsNDVI.png', width = 3,  height = 5, units = 'in', dpi = 150)
 
 # ggplot(DT, aes(LC)) + geom_histogram()
 # ggplot(DT[LC%in%c('Forest'),], aes(ΔT, NDVI))  + geom_hex(bins=20)
